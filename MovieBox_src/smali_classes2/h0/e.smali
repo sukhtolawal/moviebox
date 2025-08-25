@@ -1,0 +1,67 @@
+.class public final synthetic Lh0/e;
+.super Ljava/lang/Object;
+.source "source.java"
+
+# interfaces
+.implements Luc/c;
+
+
+# instance fields
+.field public final synthetic a:Landroid/view/ViewGroup;
+
+.field public final synthetic b:Landroidx/fragment/app/FragmentActivity;
+
+.field public final synthetic c:Lcom/cloud/tmc/integration/structure/App;
+
+.field public final synthetic d:Lcom/cloud/tmc/miniapp/base/MiniAppBaseFragment;
+
+
+# direct methods
+.method public synthetic constructor <init>(Landroid/view/ViewGroup;Landroidx/fragment/app/FragmentActivity;Lcom/cloud/tmc/integration/structure/App;Lcom/cloud/tmc/miniapp/base/MiniAppBaseFragment;)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    iput-object p1, p0, Lh0/e;->a:Landroid/view/ViewGroup;
+
+    .line 6
+    iput-object p2, p0, Lh0/e;->b:Landroidx/fragment/app/FragmentActivity;
+
+    .line 8
+    iput-object p3, p0, Lh0/e;->c:Lcom/cloud/tmc/integration/structure/App;
+
+    .line 10
+    iput-object p4, p0, Lh0/e;->d:Lcom/cloud/tmc/miniapp/base/MiniAppBaseFragment;
+
+    .line 12
+    return-void
+.end method
+
+
+# virtual methods
+.method public final P(Luc/a;)Z
+    .locals 4
+
+    .line 1
+    iget-object v0, p0, Lh0/e;->a:Landroid/view/ViewGroup;
+
+    .line 3
+    iget-object v1, p0, Lh0/e;->b:Landroidx/fragment/app/FragmentActivity;
+
+    .line 5
+    iget-object v2, p0, Lh0/e;->c:Lcom/cloud/tmc/integration/structure/App;
+
+    .line 7
+    iget-object v3, p0, Lh0/e;->d:Lcom/cloud/tmc/miniapp/base/MiniAppBaseFragment;
+
+    .line 9
+    invoke-static {v0, v1, v2, v3, p1}, Lh0/g;->k(Landroid/view/ViewGroup;Landroidx/fragment/app/FragmentActivity;Lcom/cloud/tmc/integration/structure/App;Lcom/cloud/tmc/miniapp/base/MiniAppBaseFragment;Luc/a;)Z
+
+    .line 12
+    move-result p1
+
+    .line 13
+    return p1
+.end method

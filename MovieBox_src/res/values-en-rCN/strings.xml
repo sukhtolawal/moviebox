@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="upgrade_sdk_text_details">266008~Details</string>
+    <string name="upgrade_sdk_text_later">277723~Later</string>
+    <string name="upgrade_sdk_text_later_force">335046~Exit App</string>
+    <string name="upgrade_sdk_text_new_version">335048~New Version</string>
+    <string name="upgrade_sdk_text_size">265939~Size</string>
+    <string name="upgrade_sdk_text_update">265795~Update</string>
+    <string name="upgrade_sdk_text_version">266196~Version</string>
+</resources>

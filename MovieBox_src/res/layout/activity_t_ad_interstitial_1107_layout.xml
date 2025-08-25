@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@id/llRoot" android:layout_width="0.0dip" android:layout_height="0.0dip" android:layout_marginLeft="36.0dip" android:layout_marginRight="36.0dip" app:bottomLeftRadiusYL="8.0dip" app:bottomRightRadiusYL="8.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintDimensionRatio="9:16" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_chainStyle="packed" app:scaleTypeYL="fitXY" app:topLeftRadiusYL="8.0dip" app:topRightRadiusYL="8.0dip">
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@id/main_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <com.cloud.sdk.commonutil.widget.TranCircleImageView android:id="@id/iv_main_image" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView android:id="@id/im_volume" android:visibility="gone" android:layout_width="24.0dip" android:layout_height="24.0dip" android:layout_marginTop="8.0dip" android:src="@drawable/hisavana_volume_close" android:layout_marginStart="12.0dip" app:layout_constraintStart_toStartOf="@id/main_layout" app:layout_constraintTop_toTopOf="@id/main_layout" />
+        <include android:id="@id/ad_flag" android:layout_width="0.0dip" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="@id/main_layout" app:layout_constraintStart_toStartOf="@id/main_layout" layout="@layout/include_ad_flag" />
+        <include android:id="@id/ivCancel" android:layout_width="@dimen/dimens_24" android:layout_height="@dimen/dimens_24" android:layout_marginTop="8.0dip" android:layout_marginEnd="12.0dip" app:layout_constraintEnd_toEndOf="@id/main_layout" app:layout_constraintTop_toTopOf="@id/main_layout" layout="@layout/include_countdown_close_view" />
+        <com.cloud.hisavana.sdk.api.view.StoreMarkView android:id="@id/ps_mark_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12.0dip" android:layout_marginStart="@dimen/hisavana_ad_dimen_12" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,7 @@
+.class public Loe/b;
+.super Ljava/lang/Object;
+.source "source.java"
+
+
+# static fields
+.field public static a:Landroid/app/Application;

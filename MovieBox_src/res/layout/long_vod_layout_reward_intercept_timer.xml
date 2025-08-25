@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:id="@id/llCountDown" android:background="@drawable/ad_shape_tag" android:paddingLeft="@dimen/dp_8" android:paddingTop="@dimen/dp_6" android:paddingRight="@dimen/dp_8" android:paddingBottom="@dimen/dp_6" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/sp_12" android:textColor="@color/white" android:layout_gravity="center_vertical" android:id="@id/tvCountDown" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="04:59" style="@style/style_text_400" />
+    <View android:id="@id/view" android:background="@color/ad_white_30" android:layout_width="1.0dip" android:layout_height="fill_parent" android:layout_marginLeft="6.0dip" android:layout_marginTop="4.0dip" android:layout_marginRight="6.0dip" android:layout_marginBottom="4.0dip" />
+    <TextView android:textSize="@dimen/sp_12" android:textColor="@color/white" android:layout_gravity="center_vertical" android:id="@id/tvEnterAd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enter the ad" style="@style/style_text_400" />
+    <TextView android:textSize="@dimen/sp_12" android:textColor="@color/yellow_light_50" android:layout_gravity="center_vertical" android:id="@id/tvGoAdFree" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/long_vod_reward_intercept_premium" android:layout_marginStart="8.0dip" style="@style/style_text_700" />
+</LinearLayout>

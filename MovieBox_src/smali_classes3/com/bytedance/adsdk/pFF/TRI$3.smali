@@ -1,0 +1,149 @@
+.class Lcom/bytedance/adsdk/pFF/TRI$3;
+.super Ljava/lang/Object;
+.source "source.java"
+
+# interfaces
+.implements Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/bytedance/adsdk/pFF/TRI;->SR()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic We:Lcom/bytedance/adsdk/pFF/TRI;
+
+.field final synthetic pFF:I
+
+.field final synthetic sc:I
+
+.field final synthetic zY:I
+
+
+# direct methods
+.method public constructor <init>(Lcom/bytedance/adsdk/pFF/TRI;III)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 3
+    iput p2, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->sc:I
+
+    .line 5
+    iput p3, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->pFF:I
+
+    .line 7
+    iput p4, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->zY:I
+
+    .line 9
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 12
+    return-void
+.end method
+
+
+# virtual methods
+.method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
+    .locals 1
+
+    .line 1
+    iget-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 3
+    invoke-virtual {p1}, Lcom/bytedance/adsdk/pFF/TRI;->getFrame()I
+
+    .line 6
+    move-result p1
+
+    .line 7
+    iget v0, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->sc:I
+
+    .line 9
+    add-int/lit8 v0, v0, -0x1
+
+    .line 11
+    if-lt p1, v0, :cond_1
+
+    .line 13
+    iget-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 15
+    invoke-virtual {p1}, Lcom/bytedance/adsdk/pFF/TRI;->getFrame()I
+
+    .line 18
+    move-result p1
+
+    .line 19
+    iget v0, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->sc:I
+
+    .line 21
+    add-int/lit8 v0, v0, 0x2
+
+    .line 23
+    if-ge p1, v0, :cond_1
+
+    .line 25
+    new-instance p1, Ljava/lang/StringBuilder;
+
+    .line 27
+    const-string v0, "--==--- enter timer point, frame: "
+
+    .line 29
+    invoke-direct {p1, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    .line 32
+    iget-object v0, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 34
+    invoke-virtual {v0}, Lcom/bytedance/adsdk/pFF/TRI;->getFrame()I
+
+    .line 37
+    move-result v0
+
+    .line 38
+    invoke-virtual {p1, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    .line 41
+    iget-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 43
+    invoke-virtual {p1, p0}, Lcom/bytedance/adsdk/pFF/TRI;->pFF(Landroid/animation/ValueAnimator$AnimatorUpdateListener;)V
+
+    .line 46
+    iget p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->pFF:I
+
+    .line 48
+    if-ltz p1, :cond_0
+
+    .line 50
+    iget p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->zY:I
+
+    .line 52
+    if-ltz p1, :cond_0
+
+    .line 54
+    iget-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 56
+    invoke-static {p1}, Lcom/bytedance/adsdk/pFF/TRI;->BT(Lcom/bytedance/adsdk/pFF/TRI;)V
+
+    .line 59
+    :cond_0
+    iget-object p1, p0, Lcom/bytedance/adsdk/pFF/TRI$3;->We:Lcom/bytedance/adsdk/pFF/TRI;
+
+    .line 61
+    invoke-virtual {p1}, Lcom/bytedance/adsdk/pFF/TRI;->TRI()V
+
+    .line 64
+    :cond_1
+    return-void
+.end method

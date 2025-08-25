@@ -1,0 +1,16 @@
+.class public interface abstract Landroidx/compose/ui/platform/f;
+.super Ljava/lang/Object;
+.source "source.java"
+
+
+# annotations
+.annotation runtime Lkotlin/Metadata;
+.end annotation
+
+
+# virtual methods
+.method public abstract a(I)[I
+.end method
+
+.method public abstract b(I)[I
+.end method

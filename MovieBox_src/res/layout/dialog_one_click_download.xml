@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout android:id="@id/container" android:background="@drawable/bg_one_click_dialog" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_top_cover" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="120.0dip" android:src="@mipmap/bg_one_click" android:scaleType="centerCrop" />
+        <androidx.appcompat.widget.LinearLayoutCompat android:gravity="center_horizontal" android:orientation="vertical" android:paddingBottom="16.0dip" android:layout_width="280.0dip" android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatTextView android:textSize="18.0sp" android:textStyle="bold" android:id="@id/title" android:layout_marginTop="18.0dip" style="@style/style_title_text" />
+            <com.transsion.banner.banner.Banner android:id="@id/banner" android:layout_width="fill_parent" android:layout_height="208.0dip" android:layout_marginTop="18.0dip" app:banner_viewpager_height="196.0dip" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView android:textSize="@dimen/text_size_16" android:textColor="@color/text_01" android:ellipsize="end" android:id="@id/name" android:layout_marginTop="8.0dip" android:maxWidth="200.0dip" android:lines="1" style="@style/style_medium_text" />
+            <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/text_03" android:ellipsize="end" android:id="@id/desc" android:layout_marginTop="4.0dip" android:maxWidth="200.0dip" android:lines="1" style="@style/style_regular_text" />
+            <androidx.appcompat.widget.LinearLayoutCompat android:gravity="center" android:layout_gravity="center" android:id="@id/ll_download" android:background="@drawable/bg_btn_01" android:layout_width="fill_parent" android:layout_height="36.0dip" android:layout_marginLeft="16.0dip" android:layout_marginTop="18.0dip" android:layout_marginRight="16.0dip">
+                <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_icon" android:layout_width="16.0dip" android:layout_height="16.0dip" android:src="@mipmap/ic_download_red" />
+                <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/white" android:id="@id/tv_tips" android:text="@string/download_now" android:layout_marginStart="2.0dip" style="@style/style_medium_text" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatTextView android:id="@id/tv_discover" android:layout_marginLeft="16.0dip" android:layout_marginTop="8.0dip" android:layout_marginRight="16.0dip" android:text="@string/discover_more_movies" style="@style/style_sub_btn3" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_close" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24.0dip" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/container" app:srcCompat="@mipmap/ic_circle_close" />
+</androidx.constraintlayout.widget.ConstraintLayout>

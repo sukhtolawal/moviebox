@@ -1,0 +1,135 @@
+.class public final Liz/d;
+.super Lcom/chad/library/adapter/base/BaseProviderMultiAdapter;
+.source "source.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Liz/d$b;
+    }
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Lcom/chad/library/adapter/base/BaseProviderMultiAdapter<",
+        "Ljz/b;",
+        ">;"
+    }
+.end annotation
+
+.annotation runtime Lkotlin/Metadata;
+.end annotation
+
+
+# static fields
+.field public static final I:Liz/d$b;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 2
+
+    new-instance v0, Liz/d$b;
+
+    const/4 v1, 0x1
+
+    const/4 v1, 0x0
+
+    invoke-direct {v0, v1}, Liz/d$b;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+
+    sput-object v0, Liz/d;->I:Liz/d$b;
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/util/List;)V
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List<",
+            "Ljz/b;",
+            ">;)V"
+        }
+    .end annotation
+
+    const-string v0, "data"
+
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+
+    invoke-direct {p0, p1}, Lcom/chad/library/adapter/base/BaseProviderMultiAdapter;-><init>(Ljava/util/List;)V
+
+    new-instance p1, Liz/e;
+
+    invoke-direct {p1}, Liz/e;-><init>()V
+
+    invoke-virtual {p0, p1}, Lcom/chad/library/adapter/base/BaseProviderMultiAdapter;->K0(Lcom/chad/library/adapter/base/provider/BaseItemProvider;)V
+
+    new-instance p1, Liz/h;
+
+    invoke-direct {p1}, Liz/h;-><init>()V
+
+    invoke-virtual {p0, p1}, Lcom/chad/library/adapter/base/BaseProviderMultiAdapter;->K0(Lcom/chad/library/adapter/base/provider/BaseItemProvider;)V
+
+    new-instance p1, Liz/g;
+
+    invoke-direct {p1}, Liz/g;-><init>()V
+
+    invoke-virtual {p0, p1}, Lcom/chad/library/adapter/base/BaseProviderMultiAdapter;->K0(Lcom/chad/library/adapter/base/provider/BaseItemProvider;)V
+
+    new-instance p1, Liz/d$a;
+
+    invoke-direct {p1}, Liz/d$a;-><init>()V
+
+    invoke-virtual {p0, p1}, Lcom/chad/library/adapter/base/BaseQuickAdapter;->o0(Landroidx/recyclerview/widget/DiffUtil$e;)V
+
+    return-void
+.end method
+
+.method public synthetic constructor <init>(Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+    .locals 0
+
+    and-int/lit8 p2, p2, 0x1
+
+    if-eqz p2, :cond_0
+
+    new-instance p1, Ljava/util/ArrayList;
+
+    invoke-direct {p1}, Ljava/util/ArrayList;-><init>()V
+
+    :cond_0
+    invoke-direct {p0, p1}, Liz/d;-><init>(Ljava/util/List;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public S0(Ljava/util/List;I)I
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List<",
+            "Ljz/b;",
+            ">;I)I"
+        }
+    .end annotation
+
+    const-string v0, "data"
+
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+
+    invoke-interface {p1, p2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Ljz/b;
+
+    invoke-virtual {p1}, Ljz/b;->j()I
+
+    move-result p1
+
+    return p1
+.end method

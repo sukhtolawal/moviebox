@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/bannerContainer" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/cover" android:layout_width="fill_parent" android:layout_height="120.0dip" android:scaleType="centerCrop" app:layout_constraintTop_toTopOf="parent" app:srcCompat="@color/bg_01" />
+    <View android:id="@id/bg_color" android:background="@color/bg_01" android:layout_width="fill_parent" android:layout_height="0.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@id/cover" />
+    <View android:id="@id/op_gradient" android:layout_width="fill_parent" android:layout_height="120.0dip" app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatTextView android:textSize="20.0sp" android:textColor="@color/common_white" android:id="@id/tv_ops_title" android:layout_marginTop="28.0dip" android:layout_marginStart="16.0dip" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" style="@style/style_import_text" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@id/recycler_view" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="12.0dip" app:layout_constraintTop_toBottomOf="@id/tv_ops_title" />
+    <LinearLayout android:gravity="center" android:layout_gravity="bottom" android:orientation="horizontal" android:id="@id/circleIndicator" android:padding="10.0dip" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="@id/tv_ops_title" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@id/tv_ops_title" />
+    <androidx.appcompat.widget.LinearLayoutCompat android:gravity="center" android:id="@id/view_more" android:background="@drawable/bg_view_more" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_marginTop="24.0dip" android:layout_marginStart="16.0dip" android:layout_marginEnd="16.0dip" app:layout_constraintTop_toBottomOf="@id/recycler_view">
+        <com.tn.lib.widget.TnTextView android:textColor="@color/common_white" android:gravity="center_vertical" android:id="@id/tv_view_more" android:includeFontPadding="false" android:drawablePadding="2.0dip" app:drawableEndCompat="@mipmap/ic_view_more" style="@style/style_medium_small_text" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <View android:layout_width="fill_parent" android:layout_height="16.0dip" app:layout_constraintTop_toBottomOf="@id/view_more" />
+</androidx.constraintlayout.widget.ConstraintLayout>

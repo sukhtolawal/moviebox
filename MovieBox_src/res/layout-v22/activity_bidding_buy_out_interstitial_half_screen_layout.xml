@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/rlRoot" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout android:id="@id/view" android:layout_width="0.0dip" android:layout_height="0.0dip" android:layout_marginLeft="40.0dip" android:layout_marginRight="40.0dip" android:layout_marginHorizontal="40.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintDimensionRatio="9:16" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <androidx.cardview.widget.CardView android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" app:cardCornerRadius="0.0dip" app:cardElevation="0.0dip">
+            <FrameLayout android:id="@id/container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+    <com.transsion.ad.view.AdTagView android:id="@id/adIcon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:layout_marginStart="8.0dip" app:layout_constraintStart_toStartOf="@id/view" app:layout_constraintTop_toTopOf="@id/view" />
+    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="horizontal" android:id="@id/viewCd" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:layout_marginEnd="8.0dip" app:layout_constraintEnd_toEndOf="@id/view" app:layout_constraintTop_toTopOf="@id/view">
+        <FrameLayout android:id="@id/flVolumeContainer" android:background="@drawable/ad_shape_bg_btn_01" android:visibility="gone" android:layout_width="28.0dip" android:layout_height="28.0dip" android:layout_marginEnd="10.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView android:textColor="@color/white" android:gravity="center" android:layout_gravity="center" android:id="@id/tvAudio" android:layout_width="24.0dip" android:layout_height="24.0dip" android:src="@mipmap/ad_volume_off_02" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/white" android:gravity="center" android:id="@id/tvCd" android:background="@drawable/ad_shape_bg_btn_01" android:visibility="gone" android:layout_width="28.0dip" android:layout_height="28.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout android:id="@id/flCloseContainer" android:background="@drawable/ad_shape_bg_btn_01" android:visibility="gone" android:layout_width="28.0dip" android:layout_height="28.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView android:textColor="@color/white" android:gravity="center" android:layout_gravity="center" android:layout_width="20.0dip" android:layout_height="20.0dip" android:src="@mipmap/ic_ad_close" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

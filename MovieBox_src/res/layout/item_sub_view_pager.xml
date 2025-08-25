@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:id="@id/home_sub_pager_items_status" android:layout_width="fill_parent" android:layout_height="0.0dip" app:layout_constraintTop_toTopOf="parent" />
+    <ImageView android:id="@id/home_sub_pager_item_image" android:layout_width="fill_parent" android:layout_height="280.0dip" android:scaleType="centerCrop" app:layout_constraintTop_toBottomOf="@id/home_sub_pager_items_status" />
+    <View android:id="@id/home_sub_pager_items_top_mask" android:layout_width="fill_parent" android:layout_height="84.0dip" app:layout_constraintTop_toBottomOf="@id/home_sub_pager_items_status" />
+    <View android:background="@drawable/bg_home_sub_banner_background" android:layout_width="fill_parent" android:layout_height="120.0dip" app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

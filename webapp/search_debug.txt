@@ -1,0 +1,120 @@
+--- DEBUG (pre-request) ---
+Timestamp: 1755792165075
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+62
+1755792165075
+900eb845fb6764f41bf1467412fc1492
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755792165075|2|qJcLWvfAyDyfF0tFBJgpdg==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":"MovieTV"}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755792165075|2|qJcLWvfAyDyfF0tFBJgpdg==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":"MovieTV"}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755792360966
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+60
+1755792360966
+394bf6a2a69c1b2e4768e1b2722330ee
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755792360966|2|6FHPjN58XXjEOy8hx+cAew==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755792360966|2|6FHPjN58XXjEOy8hx+cAew==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755792754454
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+60
+1755792754454
+394bf6a2a69c1b2e4768e1b2722330ee
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755792754454|2|f2qplLXZSr3m3GvJcX88hA==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755792754454|2|f2qplLXZSr3m3GvJcX88hA==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755793186904
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+60
+1755793186904
+394bf6a2a69c1b2e4768e1b2722330ee
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755793186904|2|6ViklvZQ1XKrX9Su9G7CUA==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755793186904|2|6ViklvZQ1XKrX9Su9G7CUA==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":"Movie"}'
+

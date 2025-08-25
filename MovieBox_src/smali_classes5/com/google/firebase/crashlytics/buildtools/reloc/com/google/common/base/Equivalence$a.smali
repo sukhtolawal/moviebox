@@ -1,0 +1,14 @@
+.class public synthetic Lcom/google/firebase/crashlytics/buildtools/reloc/com/google/common/base/Equivalence$a;
+.super Ljava/lang/Object;
+.source "source.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/google/firebase/crashlytics/buildtools/reloc/com/google/common/base/Equivalence;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1009
+    name = null
+.end annotation

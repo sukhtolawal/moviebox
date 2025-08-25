@@ -1,0 +1,53 @@
+/* Netflix-like dark theme */
+:root{
+  --bg:#0b0f17; --bg-2:#0f1522; --card:#121826; --card-2:#0d1421; --border:#1e2636;
+  --text:#e6e8eb; --muted:#96a0b3; --accent:#e50914; --accent-2:#2b5cff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+a{color:#8fb3ff;text-decoration:none}
+
+/* Layout */
+.header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.0)),var(--bg-2);backdrop-filter:saturate(130%) blur(6px)}
+.header-inner{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;gap:16px;align-items:center}
+.logo{font-weight:700;letter-spacing:.4px}
+.container{max-width:1120px;margin:0 auto;padding:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+
+/* Search bar */
+.search-row{display:flex;gap:10px;flex-wrap:wrap}
+.input{flex:1;min-width:240px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#0b111b;color:var(--text)}
+.select,.btn{padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#1b2232;color:var(--text);cursor:pointer}
+.btn-primary{background:var(--accent);border-color:var(--accent)}
+.btn-ghost{background:#1b2232;border-color:var(--border)}
+.hint{align-self:center;opacity:.85}
+
+/* Grid (posters) */
+.grid{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.item{background:var(--card-2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transform:translateZ(0);transition:transform .18s ease, box-shadow .18s ease}
+.item:hover{transform:scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.cover{aspect-ratio:16/9;width:100%;object-fit:cover;background:#101724;display:block}
+.meta{padding:10px}
+.title{font-weight:700;margin:0 0 4px 0;font-size:15px;line-height:1.3}
+.sub{opacity:.85;font-size:13px}
+.actions{margin-top:8px;display:flex;gap:8px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#182033;border:1px solid var(--border);font-size:12px;opacity:.9}
+
+/* Subject page */
+.hero{display:flex;flex-direction:column;gap:10px}
+.seasons{display:grid;grid-template-columns:1fr;gap:12px}
+.episodes{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:8px 12px;border-radius:999px;background:#1b2232;border:1px solid var(--border);display:inline-block}
+
+/* Player */
+.player-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pill-btn{padding:8px 12px;border-radius:999px;background:#1b2232;border:1px solid var(--border);display:inline-block;cursor:pointer}
+.pill-btn.active{background:var(--accent-2);border-color:var(--accent-2)}
+video{width:100%;max-height:70vh;background:#000;border-radius:10px}
+
+/* Utilities */
+.err{color:#ff6b6b;white-space:pre-wrap}
+.muted{opacity:.75}
+.small{font-size:12px}
+.debug{background:#0e1421;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:12px;line-height:1.45}

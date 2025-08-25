@@ -1,0 +1,46 @@
+.class public final synthetic Lcom/google/android/gms/internal/ads/zzfah;
+.super Ljava/lang/Object;
+.source "source.java"
+
+# interfaces
+.implements Ljava/util/concurrent/Callable;
+
+
+# instance fields
+.field public final synthetic zza:Lcom/google/android/gms/internal/ads/zzfai;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lcom/google/android/gms/internal/ads/zzfai;)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    iput-object p1, p0, Lcom/google/android/gms/internal/ads/zzfah;->zza:Lcom/google/android/gms/internal/ads/zzfai;
+
+    .line 6
+    return-void
+.end method
+
+
+# virtual methods
+.method public final call()Ljava/lang/Object;
+    .locals 2
+
+    .line 1
+    new-instance v0, Lcom/google/android/gms/internal/ads/zzfaj;
+
+    .line 3
+    iget-object v1, p0, Lcom/google/android/gms/internal/ads/zzfah;->zza:Lcom/google/android/gms/internal/ads/zzfai;
+
+    .line 5
+    iget-object v1, v1, Lcom/google/android/gms/internal/ads/zzfai;->zzb:Ljava/util/List;
+
+    .line 7
+    invoke-direct {v0, v1}, Lcom/google/android/gms/internal/ads/zzfaj;-><init>(Ljava/util/List;)V
+
+    .line 10
+    return-object v0
+.end method

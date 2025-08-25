@@ -1,0 +1,37 @@
+.class public final Lcom/to/aboomy/pager2banner/R$style;
+.super Ljava/lang/Object;
+.source "source.java"
+
+
+# static fields
+.field public static TextAppearance_Compat_Notification:I = 0x7f140251
+
+.field public static TextAppearance_Compat_Notification_Info:I = 0x7f140252
+
+.field public static TextAppearance_Compat_Notification_Line2:I = 0x7f140254
+
+.field public static TextAppearance_Compat_Notification_Time:I = 0x7f140257
+
+.field public static TextAppearance_Compat_Notification_Title:I = 0x7f140259
+
+.field public static Widget_Compat_NotificationActionContainer:I = 0x7f1403db
+
+.field public static Widget_Compat_NotificationActionText:I = 0x7f1403dc
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 52
+
+    return-void
+.end method
+
+.method private constructor <init>()V
+    .locals 51
+
+    move-object/from16 v0, p0
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method

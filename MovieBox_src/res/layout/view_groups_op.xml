@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="16.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.imageview.ShapeableImageView android:id="@id/iv_cover" android:background="@color/bg_01" android:layout_width="54.0dip" android:layout_height="54.0dip" android:scaleType="centerCrop" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:shapeAppearanceOverlay="@style/roundStyle_4" />
+    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical" android:id="@id/ll_content" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip" app:layout_constraintBottom_toBottomOf="@id/iv_cover" app:layout_constraintEnd_toStartOf="@id/joinAnimationView" app:layout_constraintStart_toEndOf="@id/iv_cover" app:layout_constraintTop_toTopOf="@id/iv_cover">
+        <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/common_white" android:ellipsize="end" android:id="@id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" style="@style/style_import_text" />
+        <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/white_40" android:ellipsize="end" android:id="@id/tv_desc" android:visibility="visible" android:maxLines="1" style="@style/style_regular_text" />
+        <androidx.appcompat.widget.AppCompatTextView android:textColor="@color/white_40" android:ellipsize="end" android:id="@id/tv_post_count" android:visibility="visible" android:maxLines="1" style="@style/style_regular_text" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.tn.lib.view.JoinAnimationView android:id="@id/joinAnimationView" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

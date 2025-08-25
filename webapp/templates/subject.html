@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subject · {{ subject_id }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v={{ asset_v }}">
+</head>
+<body>
+  <header class="header"><div class="header-inner"><a class="logo" href="/">← Back</a></div></header>
+  <div class="container">
+    {% if error %}
+      <div class="card err">{{ error }}</div>
+    {% else %}
+      <div class="card">
+        <h2 style="margin-top:0;">Seasons & Episodes · {{ subject_id }}</h2>
+        {% if seasons and seasons|length %}
+          <div class="seasons">
+            {% for s in seasons %}
+              <div>
+                <div class="title" style="margin-bottom:6px;">Season {{ s.se }}</div>
+                <div class="episodes">
+                  {% for e in s.episodes %}
+                    <a class="pill" href="/play?subjectId={{ subject_id }}&se={{ s.se }}&ep={{ e }}">Ep {{ e }}</a>
+                  {% endfor %}
+                </div>
+                {% if s.resolutions and s.resolutions|length %}
+                  <div class="muted" style="margin-top:8px;">Resolutions available: {{ s.resolutions | map(attribute='resolution') | join(', ') }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div>No episodes enumerated. Try playing Season 1 / Ep 1 directly.</div>
+          <div style="margin-top:10px;"><a class="pill" href="/play?subjectId={{ subject_id }}&se=1&ep=1">Play S1E1</a></div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  <script>
+    (function(){
+      try {
+        // Prefetch S1E1 (or se=1, ep=1) to warm the backend cache
+        var sid = "{{ subject_id }}";
+        var host = "{{ host or '' }}";
+        var se = 1, ep = 1;
+        var url = '/play?subjectId=' + encodeURIComponent(sid) + '&se=' + se + '&ep=' + ep + '&preload=1';
+        if (host) url += '&host=' + encodeURIComponent(host);
+        fetch(url, { method: 'GET', credentials: 'same-origin' }).catch(function(){});
+      } catch(e){}
+    })();
+  </script>
+</body>
+</html>

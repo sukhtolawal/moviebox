@@ -1,0 +1,249 @@
+.class public final Lcv/f;
+.super Ljava/lang/Object;
+.source "source.java"
+
+# interfaces
+.implements Ln6/a;
+
+
+# instance fields
+.field public final a:Landroid/widget/LinearLayout;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+.field public final b:Landroid/widget/LinearLayout;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+.field public final c:Landroid/widget/TextView;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+.field public final d:Landroid/widget/TextView;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+.field public final f:Landroid/widget/TextView;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+.field public final g:Landroid/view/View;
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+.end field
+
+
+# direct methods
+.method public constructor <init>(Landroid/widget/LinearLayout;Landroid/widget/LinearLayout;Landroid/widget/TextView;Landroid/widget/TextView;Landroid/widget/TextView;Landroid/view/View;)V
+    .locals 0
+    .param p1    # Landroid/widget/LinearLayout;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p2    # Landroid/widget/LinearLayout;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p3    # Landroid/widget/TextView;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p4    # Landroid/widget/TextView;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p5    # Landroid/widget/TextView;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p6    # Landroid/view/View;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    iput-object p1, p0, Lcv/f;->a:Landroid/widget/LinearLayout;
+
+    .line 6
+    iput-object p2, p0, Lcv/f;->b:Landroid/widget/LinearLayout;
+
+    .line 8
+    iput-object p3, p0, Lcv/f;->c:Landroid/widget/TextView;
+
+    .line 10
+    iput-object p4, p0, Lcv/f;->d:Landroid/widget/TextView;
+
+    .line 12
+    iput-object p5, p0, Lcv/f;->f:Landroid/widget/TextView;
+
+    .line 14
+    iput-object p6, p0, Lcv/f;->g:Landroid/view/View;
+
+    .line 16
+    return-void
+.end method
+
+.method public static a(Landroid/view/View;)Lcv/f;
+    .locals 7
+    .param p0    # Landroid/view/View;
+        .annotation build Landroidx/annotation/NonNull;
+        .end annotation
+    .end param
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+
+    .line 1
+    move-object v2, p0
+
+    .line 2
+    check-cast v2, Landroid/widget/LinearLayout;
+
+    .line 4
+    sget v0, Lcom/transsion/player/longvideo/R$id;->tvCountDown:I
+
+    .line 6
+    invoke-static {p0, v0}, Ln6/b;->a(Landroid/view/View;I)Landroid/view/View;
+
+    .line 9
+    move-result-object v1
+
+    .line 10
+    move-object v3, v1
+
+    .line 11
+    check-cast v3, Landroid/widget/TextView;
+
+    .line 13
+    if-eqz v3, :cond_0
+
+    .line 15
+    sget v0, Lcom/transsion/player/longvideo/R$id;->tvEnterAd:I
+
+    .line 17
+    invoke-static {p0, v0}, Ln6/b;->a(Landroid/view/View;I)Landroid/view/View;
+
+    .line 20
+    move-result-object v1
+
+    .line 21
+    move-object v4, v1
+
+    .line 22
+    check-cast v4, Landroid/widget/TextView;
+
+    .line 24
+    if-eqz v4, :cond_0
+
+    .line 26
+    sget v0, Lcom/transsion/player/longvideo/R$id;->tvGoAdFree:I
+
+    .line 28
+    invoke-static {p0, v0}, Ln6/b;->a(Landroid/view/View;I)Landroid/view/View;
+
+    .line 31
+    move-result-object v1
+
+    .line 32
+    move-object v5, v1
+
+    .line 33
+    check-cast v5, Landroid/widget/TextView;
+
+    .line 35
+    if-eqz v5, :cond_0
+
+    .line 37
+    sget v0, Lcom/transsion/player/longvideo/R$id;->view:I
+
+    .line 39
+    invoke-static {p0, v0}, Ln6/b;->a(Landroid/view/View;I)Landroid/view/View;
+
+    .line 42
+    move-result-object v6
+
+    .line 43
+    if-eqz v6, :cond_0
+
+    .line 45
+    new-instance p0, Lcv/f;
+
+    .line 47
+    move-object v0, p0
+
+    .line 48
+    move-object v1, v2
+
+    .line 49
+    invoke-direct/range {v0 .. v6}, Lcv/f;-><init>(Landroid/widget/LinearLayout;Landroid/widget/LinearLayout;Landroid/widget/TextView;Landroid/widget/TextView;Landroid/widget/TextView;Landroid/view/View;)V
+
+    .line 52
+    return-object p0
+
+    .line 53
+    :cond_0
+    invoke-virtual {p0}, Landroid/view/View;->getResources()Landroid/content/res/Resources;
+
+    .line 56
+    move-result-object p0
+
+    .line 57
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->getResourceName(I)Ljava/lang/String;
+
+    .line 60
+    move-result-object p0
+
+    .line 61
+    new-instance v0, Ljava/lang/NullPointerException;
+
+    .line 63
+    const-string v1, "Missing required view with ID: "
+
+    .line 65
+    invoke-virtual {v1, p0}, Ljava/lang/String;->concat(Ljava/lang/String;)Ljava/lang/String;
+
+    .line 68
+    move-result-object p0
+
+    .line 69
+    invoke-direct {v0, p0}, Ljava/lang/NullPointerException;-><init>(Ljava/lang/String;)V
+
+    .line 72
+    throw v0
+.end method
+
+
+# virtual methods
+.method public b()Landroid/widget/LinearLayout;
+    .locals 1
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+
+    .line 1
+    iget-object v0, p0, Lcv/f;->a:Landroid/widget/LinearLayout;
+
+    .line 3
+    return-object v0
+.end method
+
+.method public bridge synthetic getRoot()Landroid/view/View;
+    .locals 1
+    .annotation build Landroidx/annotation/NonNull;
+    .end annotation
+
+    .line 1
+    invoke-virtual {p0}, Lcv/f;->b()Landroid/widget/LinearLayout;
+
+    .line 4
+    move-result-object v0
+
+    .line 5
+    return-object v0
+.end method

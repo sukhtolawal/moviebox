@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MovieBox Helper · Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v={{ asset_v }}">
+</head>
+<body>
+  <header class="header"><div class="header-inner"><div class="logo">MovieBox · Search</div></div></header>
+  <div class="container">
+    <div class="card">
+      <form id="searchForm" method="get" class="search-row">
+        <input id="qInput" class="input" type="text" name="q" placeholder="Search movies/series/music…" value="{{ q or '' }}" />
+        <select class="select" name="tab">
+          <option value="" {% if not tab %}selected{% endif %}>All</option>
+          <option value="MovieTV" {% if tab=='MovieTV' %}selected{% endif %}>Movie/Series</option>
+          <option value="TV" {% if tab=='TV' %}selected{% endif %}>TV/Series</option>
+          <option value="Movie" {% if tab=='Movie' %}selected{% endif %}>Movie</option>
+          <option value="Music" {% if tab=='Music' %}selected{% endif %}>Music</option>
+        </select>
+        <button id="searchBtn" class="btn btn-primary" type="submit">Search</button>
+        <span id="loadingHint" class="hint" style="display:none;">Loading…</span>
+      </form>
+      {% if error %}
+      <div class="card err" style="margin-top:10px;">{{ error }}</div>
+      {% endif %}
+    </div>
+
+    {% if results %}
+    <div class="card small muted" style="margin-top:10px;">
+      Results blocks: {{ blocks_count }}
+      {% if result_code %} · code: {{ result_code }}{% endif %}
+      {% if result_message %} · message: {{ result_message }}{% endif %}
+    </div>
+    {% if raw_json %}
+      <div class="card" style="margin-top:10px;">
+        <div style="font-weight:600; margin-bottom:6px;">Debug JSON</div>
+        <pre class="debug" style="max-height:280px; overflow:auto;">{{ raw_json | tojson(indent=2) }}</pre>
+      </div>
+    {% endif %}
+    {% if blocks and blocks|length %}
+    <div class="grid">
+      {% for block in blocks %}
+        {% for s in block.get('subjects',[]) %}
+          {% set sid = s.get('subjectId') %}
+          <div class="item">
+            {% set cover = (s.get('cover') or {}).get('url') %}
+            <a href="{{ url_for('subject', subject_id=sid) }}">
+              <img class="cover" src="{{ cover }}" alt="cover">
+            </a>
+            <div class="meta">
+              <div class="title">{{ s.get('title') }}</div>
+              <div class="sub">
+                <span>{{ s.get('releaseDate') }}</span>
+                {% if s.get('genre') %} · <span>{{ s.get('genre') }}</span>{% endif %}
+                {% if s.get('countryName') %} · <span>{{ s.get('countryName') }}</span>{% endif %}
+                {% if s.get('imdbRatingValue') %} · <span>IMDb {{ s.get('imdbRatingValue') }}</span>{% endif %}
+              </div>
+              <div class="actions">
+                {% set st = s.get('subjectType') %}
+                {% if st == 1 %}
+                  {# Movie: use se=0&ep=0 #}
+                  <a class="btn btn-primary" href="/play?subjectId={{ sid }}&se=0&ep=0">Play</a>
+                {% else %}
+                  <a class="btn btn-primary" href="/play?subjectId={{ sid }}&se=1&ep=1">Play S1E1</a>
+                {% endif %}
+                <a class="btn btn-ghost" href="{{ url_for('subject', subject_id=sid) }}">Details</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% else %}
+      <div class="card" style="margin-top:12px;">No results found.</div>
+    {% endif %}
+    {% endif %}
+  </div>
+  <script>
+    (function(){
+      const form = document.getElementById('searchForm');
+      const input = document.getElementById('qInput');
+      const btn = document.getElementById('searchBtn');
+      const hint = document.getElementById('loadingHint');
+      let timer = null;
+      function submitNow(){
+        if (!form) return;
+        btn.disabled = true;
+        hint.style.display = 'inline';
+        form.submit();
+      }
+      if (input) {
+        input.addEventListener('input', function(){
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(submitNow, 300); // debounce 300ms
+        });
+      }
+      if (form) {
+        form.addEventListener('submit', function(){
+          btn.disabled = true;
+          hint.style.display = 'inline';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

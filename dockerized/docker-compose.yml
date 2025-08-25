@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: dockerized/backend/Dockerfile
+    container_name: dec-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount token if present (optional)
+      - ../token.txt:/app/../token.txt:ro
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: dockerized/frontend/Dockerfile
+      args:
+        BACKEND_URL: http://backend:5001
+    container_name: dec-frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Public tunnel using ngrok to expose the frontend
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: dec-ngrok
+    restart: unless-stopped
+    depends_on:
+      - frontend
+    env_file:
+      - ./ngrok/.env
+    # Tunnels internal service name (frontend:3000) on the Docker network
+    command: http --log=stdout http://frontend:3000
+    ports:
+      - "4040:4040"

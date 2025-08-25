@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Play · S{{ se }}E{{ ep }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v={{ asset_v }}">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
+</head>
+<body>
+  <header class="header"><div class="header-inner"><a class="logo" href="/subject/{{ subject_id }}">← Back to episodes</a></div></header>
+  <div class="container">
+    {% if error %}
+      <div class="card err">{{ error }}</div>
+    {% else %}
+      <div class="player-wrap">
+        <div class="row" style="margin-bottom:10px;">
+          <div class="title">S{{ se }} · E{{ ep }}</div>
+          <div class="muted">Select quality:</div>
+          {% for s in streams %}
+            {% set idx = loop.index0 %}
+            <a class="pill-btn {% if selected and s.url == selected.url %}active{% endif %}" href="/play?subjectId={{ subject_id }}&se={{ se }}&ep={{ ep }}&qidx={{ idx }}">{{ s.resolution or s.format or 'auto' }}</a>
+          {% endfor %}
+        </div>
+        <div class="row" id="audioRow" style="margin-bottom:10px; display:none;">
+          <div class="muted">Audio:</div>
+          <div id="audioPills" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+        </div>
+        {% if selected %}
+          <video id="player" controls playsinline></video>
+          <script>
+            (function(){
+              const srcUrl = {{ selected.url | tojson }};
+              const ua = 'okhttp/4.9.3'; // mirrors app UA
+              const video = document.getElementById('player');
+              function canPlayM3U8(){ return video.canPlayType('application/vnd.apple.mpegURL'); }
+              const isM3U8 = srcUrl.includes('.m3u8');
+              const audioRow = document.getElementById('audioRow');
+              const audioPills = document.getElementById('audioPills');
+
+              function renderAudioButtons(list, getActiveIdx, onSelect){
+                if (!list || !list.length) { audioRow.style.display = 'none'; return; }
+                audioRow.style.display = 'flex';
+                audioPills.innerHTML = '';
+                list.forEach((t, i) => {
+                  const btn = document.createElement('a');
+                  btn.className = 'pill' + (i === getActiveIdx() ? ' active' : '');
+                  const label = (t.name || t.lang || t.language || `Track ${i+1}`);
+                  btn.textContent = label;
+                  btn.href = 'javascript:void(0)';
+                  btn.onclick = () => {
+                    onSelect(i);
+                    // refresh active styling
+                    renderAudioButtons(list, getActiveIdx, onSelect);
+                  };
+                  audioPills.appendChild(btn);
+                });
+              }
+
+              if (isM3U8) {
+                if (Hls.isSupported()) {
+                  const hls = new Hls({ maxBufferLength: 30 });
+                  hls.loadSource(srcUrl);
+                  hls.attachMedia(video);
+                  // Render audio tracks when known
+                  function setupHlsAudio(){
+                    const tracks = hls.audioTracks || [];
+                    if (!tracks.length) { audioRow.style.display = 'none'; return; }
+                    renderAudioButtons(tracks, () => hls.audioTrack, (idx) => { hls.audioTrack = idx; });
+                  }
+                  hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, setupHlsAudio);
+                  hls.on(Hls.Events.MANIFEST_PARSED, setupHlsAudio);
+                } else if (canPlayM3U8()) {
+                  video.src = srcUrl;
+                  // Safari native audio tracks
+                  function setupNativeAudio(){
+                    try {
+                      const list = video.audioTracks; // Safari
+                      if (!list || list.length === 0) { audioRow.style.display = 'none'; return; }
+                      const tracks = Array.from({length: list.length}, (_, i) => ({ name: list[i].label || list[i].language || `Track ${i+1}` }));
+                      function getActive(){
+                        for (let i = 0; i < list.length; i++) if (list[i].enabled) return i;
+                        return 0;
+                      }
+                      function select(i){
+                        for (let j = 0; j < list.length; j++) list[j].enabled = (j === i);
+                      }
+                      renderAudioButtons(tracks, getActive, select);
+                    } catch(e){ audioRow.style.display = 'none'; }
+                  }
+                  video.addEventListener('loadedmetadata', setupNativeAudio, { once: true });
+                } else {
+                  // fallback: let the browser try anyway
+                  video.src = srcUrl;
+                }
+              } else {
+                video.src = srcUrl;
+              }
+              // set UA via fetch is not trivial; CDN link doesn't need headers typically.
+            })();
+          </script>
+        {% else %}
+          <div>No playable streams found.</div>
+        {% endif %}
+      </div>
+      {% if raw %}
+      <div class="card" style="margin-top:12px;">
+        <div style="font-weight:600; margin-bottom:6px;">Debug: Raw play-info JSON</div>
+        {% if raw.get('code') is not none or raw.get('message') %}
+          <div class="muted" style="margin-bottom:6px;">code={{ raw.get('code') }} · message={{ raw.get('message') }}</div>
+        {% endif %}
+        <pre class="debug">{{ raw | tojson(indent=2) }}</pre>
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</body>
+</html>

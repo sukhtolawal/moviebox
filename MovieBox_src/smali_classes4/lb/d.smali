@@ -1,0 +1,209 @@
+.class public final Llb/d;
+.super Ljava/lang/Object;
+.source "source.java"
+
+
+# annotations
+.annotation runtime Lkotlin/Metadata;
+.end annotation
+
+
+# instance fields
+.field public final a:Ljava/util/WeakHashMap;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/WeakHashMap<",
+            "Ljava/lang/String;",
+            "Lbc/a;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 2
+
+    .line 1
+    const/4 v0, 0x1
+
+    const/4 v0, 0x0
+
+    const/4 v1, 0x1
+
+    invoke-direct {p0, v0, v1, v0}, Llb/d;-><init>(Ljava/util/WeakHashMap;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/util/WeakHashMap;)V
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/WeakHashMap<",
+            "Ljava/lang/String;",
+            "Lbc/a;",
+            ">;)V"
+        }
+    .end annotation
+
+    const-string v0, "pageCache"
+
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 2
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    return-void
+.end method
+
+.method public synthetic constructor <init>(Ljava/util/WeakHashMap;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+    .locals 0
+
+    and-int/lit8 p2, p2, 0x1
+
+    if-eqz p2, :cond_0
+
+    .line 3
+    new-instance p1, Ljava/util/WeakHashMap;
+
+    invoke-direct {p1}, Ljava/util/WeakHashMap;-><init>()V
+
+    .line 4
+    :cond_0
+    invoke-direct {p0, p1}, Llb/d;-><init>(Ljava/util/WeakHashMap;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a()Ljava/util/WeakHashMap;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/WeakHashMap<",
+            "Ljava/lang/String;",
+            "Lbc/a;",
+            ">;"
+        }
+    .end annotation
+
+    .line 1
+    iget-object v0, p0, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    .line 3
+    return-object v0
+.end method
+
+.method public equals(Ljava/lang/Object;)Z
+    .locals 3
+
+    .line 1
+    const/4 v0, 0x1
+
+    .line 2
+    if-ne p0, p1, :cond_0
+
+    .line 4
+    return v0
+
+    .line 5
+    :cond_0
+    instance-of v1, p1, Llb/d;
+
+    .line 7
+    const/4 v2, 0x1
+
+    const/4 v2, 0x0
+
+    .line 8
+    if-nez v1, :cond_1
+
+    .line 10
+    return v2
+
+    .line 11
+    :cond_1
+    check-cast p1, Llb/d;
+
+    .line 13
+    iget-object v1, p0, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    .line 15
+    iget-object p1, p1, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    .line 17
+    invoke-static {v1, p1}, Lkotlin/jvm/internal/Intrinsics;->b(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    .line 20
+    move-result p1
+
+    .line 21
+    if-nez p1, :cond_2
+
+    .line 23
+    return v2
+
+    .line 24
+    :cond_2
+    return v0
+.end method
+
+.method public hashCode()I
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    .line 3
+    invoke-virtual {v0}, Ljava/lang/Object;->hashCode()I
+
+    .line 6
+    move-result v0
+
+    .line 7
+    return v0
+.end method
+
+.method public toString()Ljava/lang/String;
+    .locals 2
+
+    .line 1
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    .line 3
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 6
+    const-string v1, "KeyboardCache(pageCache="
+
+    .line 8
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 11
+    iget-object v1, p0, Llb/d;->a:Ljava/util/WeakHashMap;
+
+    .line 13
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    .line 16
+    const/16 v1, 0x29
+
+    .line 18
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    .line 21
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 24
+    move-result-object v0
+
+    .line 25
+    return-object v0
+.end method

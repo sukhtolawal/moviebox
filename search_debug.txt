@@ -1,0 +1,328 @@
+--- DEBUG (pre-request) ---
+Timestamp: 1755785187616
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+58
+1755785187616
+298763eb3459eaaad7134061643fa32d
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755785187616|2|yIBa/yyuiF2HadvlMxHi2w==",
+  "user-agent": "okhttp/4.9.3"
+}
+Body: {"page":1,"perPage":24,"keyword":"john wick","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755785187616|2|yIBa/yyuiF2HadvlMxHi2w==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":24,"keyword":"john wick","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755785268092
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+58
+1755785268092
+298763eb3459eaaad7134061643fa32d
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755785268092|2|3JGJPo0W4lHwu/y5Y4vH7Q==",
+  "user-agent": "okhttp/4.9.3"
+}
+Body: {"page":1,"perPage":24,"keyword":"john wick","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755785268092|2|3JGJPo0W4lHwu/y5Y4vH7Q==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":24,"keyword":"john wick","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755785428684
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+58
+1755785428684
+298763eb3459eaaad7134061643fa32d
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755785428684|2|uDkppd4Mwxa2yKUO+GwxYw==",
+  "user-agent": "okhttp/4.9.3",
+  "X-Client-Token": "1755785428684,470a3e3bca1160844fdf2d83d795b7d8"
+}
+Body: {"page":1,"perPage":24,"keyword":"john wick","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755785428684|2|uDkppd4Mwxa2yKUO+GwxYw==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":24,"keyword":"john wick","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755787618022
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+57
+1755787618022
+2ea49bc0d1d17719155100696fb76912
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755787618022|2|Wkj4ad76F2PHpW9GH/7/og==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":24,"keyword":"avengers","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755787618022|2|Wkj4ad76F2PHpW9GH/7/og==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":24,"keyword":"avengers","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755787773580
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+57
+1755787773580
+508896bb79545d663529d30850d03c7c
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755787773580|2|zN2yYQivOZnl6QpKo9rjmQ==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755787773580|2|zN2yYQivOZnl6QpKo9rjmQ==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755788356233
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+57
+1755788356233
+24001de81eb8d2bd9d8a3b1d74a6c0e3
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755788356233|2|ZuDwcawJQvnnWKoia835JA==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":10,"keyword":"Avengers","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755788356233|2|ZuDwcawJQvnnWKoia835JA==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":10,"keyword":"Avengers","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755789219051
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+53
+1755789219051
+a6086765f84c0b4f0f4a88c5371b3d83
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755789219051|2|Jy4oubstXhTDKQVNjH509w==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"test","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755789219051|2|Jy4oubstXhTDKQVNjH509w==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"test","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755789313542
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+56
+1755789313542
+0227a9cdbd90c4019226bf97751d0425
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755789313542|2|mQIwSTrkxG+CKTqU1UCrqA==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"friends","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755789313542|2|mQIwSTrkxG+CKTqU1UCrqA==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"friends","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755789801425
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+56
+1755789801425
+56ff9b1d8805f49bcd8384e48c42b073
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755789801425|2|kq3Q5npSiAI4goWawrRUfA==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"friends","tabId":"TV"}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755789801425|2|kq3Q5npSiAI4goWawrRUfA==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"friends","tabId":"TV"}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755791269591
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+57
+1755791269591
+508896bb79545d663529d30850d03c7c
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755791269591|2|fJUPqwknG3QmkMW86nAA0A==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":20,"keyword":"avengers","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755791269591|2|fJUPqwknG3QmkMW86nAA0A==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":20,"keyword":"avengers","tabId":null}'
+
+--- DEBUG (pre-request) ---
+Timestamp: 1755796885766
+StringToSign:
+POST
+application/json, text/plain, */*
+application/json; charset=UTF-8
+51
+1755796885766
+9d74dacec7bd8c6041cf4b0d5a20a0c4
+/wefeed-mobile-bff/subject-api/search/v2
+Headers: {
+  "accept": "application/json, text/plain, */*",
+  "content-type": "application/json; charset=UTF-8",
+  "x-tr-signature-method": "HmacMD5",
+  "x-tr-signature": "1755796885766|2|i6Fhyngn1TzrsiFWkKWPTg==",
+  "user-agent": "okhttp/4.9.3",
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjg5NDcwNDYzMjcwMzczNjI0NTYsInV0cCI6MSwiZXhwIjoxNzYzNTYzNTQ3LCJpYXQiOjE3NTU3ODcyNDd9.0j7Y0GUc7sTpP0pT9w3HYl5Vkbv2aY6mD6vbiy5ajbg"
+}
+Body: {"page":1,"perPage":5,"keyword":"don","tabId":null}
+Curl:
+curl \
++  -i \
++  'https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/search/v2' \
++  -H 'accept: application/json, text/plain, */*' \
++  -H 'content-type: application/json; charset=UTF-8' \
++  -H 'x-tr-signature-method: HmacMD5' \
++  -H 'x-tr-signature: 1755796885766|2|i6Fhyngn1TzrsiFWkKWPTg==' \
++  -H 'user-agent: okhttp/4.9.3' \
++  --data-binary '{"page":1,"perPage":5,"keyword":"don","tabId":null}'
+

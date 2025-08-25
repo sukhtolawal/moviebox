@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:id="@id/btnGlobalSwitchConfig" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Global switch" android:textAllCaps="false" />
+    <Button android:id="@id/btnSceneConfig" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="场景信息展示" android:textAllCaps="false" />
+    <Button android:id="@id/btnAdPlanConfig" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="广告计划展示" android:textAllCaps="false" />
+    <Button android:id="@id/btnPsOfferConfig" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="PS Offer 展示" android:textAllCaps="false" />
+    <Button android:id="@id/btnOtherConfig" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="其他广告配置展示" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadBannerAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载Banner广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadSplashAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载Splash广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadVideoAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载Video广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadInterstitialAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载Interstitial广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadNativeAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载Native广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnLoadNativeListAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="加载NativeList广告" android:textAllCaps="false" />
+    <Button android:id="@id/btnIrregularAd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Irregular 广告" android:textAllCaps="false" />
+</LinearLayout>
