@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Expo / Metro
+.expo/
+.expo-shared/
+.dist/
+dist/
+web-build/
+
+# OS
+.DS_Store
+Thumbs.db

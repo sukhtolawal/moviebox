@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "Sbox",
+    "slug": "moviebox-wrapper",
+    "scheme": "moviebox",
+    "version": "1.0.0",
+    "orientation": "default",
+    "backgroundColor": "#000000",
+    "icon": "./public/icon-192.png",
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ggff.moviebox",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "UIRequiresPersistentWiFi": false
+      }
+    },
+    "android": {
+      "package": "ggff.moviebox",
+      "permissions": [],
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./public/icon-192.png",
+        "backgroundColor": "#000000"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.24",
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 23,
+            "kotlinOptions": { "jvmTarget": "17" },
+            "compileOptions": {
+              "sourceCompatibility": "17",
+              "targetCompatibility": "17"
+            }
+          }
+        }
+      ]
+    ],
+    "web": {
+      "bundler": "metro",
+      "favicon": ""
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a45593bd-a97f-455a-a7c8-f3a5a04069bf"
+      }
+    }
+  }
+}

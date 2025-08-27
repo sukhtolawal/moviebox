@@ -6,6 +6,8 @@ from typing import Optional, Tuple, Any, Dict
 import threading
 from flask import Flask, request, render_template, redirect, url_for, jsonify, Response
 import httpx
+import hashlib
+import urllib.parse
 
 # Ensure project root is importable when running from webapp/
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -638,6 +640,620 @@ def api_play():
         return jsonify({"code": 500, "message": str(e)}), 500
     except Exception as e:
         return jsonify({"code": 500, "message": repr(e)}), 500
+
+@app.get("/api/subtitles/search")
+def search_subtitles():
+    """Search for subtitles using OpenSubtitles API"""
+    title = request.args.get("title")
+    imdb_id = request.args.get("imdb_id")
+    language = request.args.get("language", "en")
+    
+    if not title and not imdb_id:
+        return jsonify({"error": "Either title or imdb_id is required"}), 400
+    
+    # OpenSubtitles API endpoint
+    base_url = "https://api.opensubtitles.com/api/v1"
+    
+    headers = {
+        "User-Agent": "MovieBox/1.0",
+        "Accept": "application/json"
+    }
+    
+    try:
+        if imdb_id:
+            # Search by IMDB ID
+            url = f"{base_url}/subtitles"
+            params = {
+                "imdb_id": imdb_id,
+                "languages": language
+            }
+        else:
+            # Search by title
+            url = f"{base_url}/subtitles"
+            params = {
+                "query": title,
+                "languages": language
+            }
+        
+        with httpx.Client(timeout=30.0) as client:
+            response = client.get(url, params=params, headers=headers)
+            
+        if response.status_code == 200:
+            data = response.json()
+            return jsonify(data)
+        else:
+            return jsonify({"error": f"OpenSubtitles API error: {response.status_code}"}), response.status_code
+            
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch subtitles: {str(e)}"}), 500
+
+@app.get("/api/subtitles/download")
+def download_subtitle():
+    """Download subtitle file from OpenSubtitles"""
+    subtitle_id = request.args.get("subtitle_id")
+    
+    if not subtitle_id:
+        return jsonify({"error": "subtitle_id is required"}), 400
+    
+    # OpenSubtitles download endpoint
+    url = f"https://api.opensubtitles.com/api/v1/download"
+    
+    headers = {
+        "User-Agent": "MovieBox/1.0",
+        "Accept": "application/json"
+    }
+    
+    try:
+        with httpx.Client(timeout=30.0) as client:
+            response = client.post(url, json={"subtitle_id": subtitle_id}, headers=headers)
+            
+        if response.status_code == 200:
+            data = response.json()
+            return jsonify(data)
+        else:
+            return jsonify({"error": f"OpenSubtitles API error: {response.status_code}"}), response.status_code
+            
+    except Exception as e:
+        return jsonify({"error": f"Failed to download subtitle: {str(e)}"}), 500
+
+@app.get("/api/subtitles/opensubtitles")
+def opensubtitles_search():
+    """Alternative subtitle search endpoint with more options"""
+    query = request.args.get("q")
+    imdb_id = request.args.get("imdb_id")
+    language = request.args.get("lang", "en")
+    season = request.args.get("season")
+    episode = request.args.get("episode")
+    
+    if not query and not imdb_id:
+        return jsonify({"error": "Either q (query) or imdb_id is required"}), 400
+    
+    # Build search query
+    search_query = query
+    if season and episode:
+        search_query = f"{query} S{season:02d}E{episode:02d}"
+    
+    # OpenSubtitles search
+    url = "https://api.opensubtitles.com/api/v1/subtitles"
+    
+    params = {
+        "languages": language,
+        "limit": 20
+    }
+    
+    if imdb_id:
+        params["imdb_id"] = imdb_id
+    else:
+        params["query"] = search_query
+    
+    headers = {
+        "User-Agent": "MovieBox/1.0",
+        "Accept": "application/json"
+    }
+    
+    try:
+        with httpx.Client(timeout=30.0) as client:
+            response = client.get(url, params=params, headers=headers)
+            
+        if response.status_code == 200:
+            data = response.json()
+            # Format response to match expected structure
+            formatted_data = {
+                "code": 200,
+                "data": {
+                    "subtitles": data.get("data", []),
+                    "total": len(data.get("data", [])),
+                    "query": search_query,
+                    "language": language
+                }
+            }
+            return jsonify(formatted_data)
+        else:
+            return jsonify({"error": f"OpenSubtitles API error: {response.status_code}"}), response.status_code
+            
+    except Exception as e:
+        return jsonify({"error": f"Failed to search subtitles: {str(e)}"}), 500
+
+@app.get("/api/subtitles/local")
+def get_local_subtitles():
+    """Get available local subtitle files"""
+    import os
+    import glob
+    
+    subtitle_dir = request.args.get("dir", "./subtitles")
+    pattern = request.args.get("pattern", "*.srt")
+    
+    try:
+        if not os.path.exists(subtitle_dir):
+            return jsonify({"error": f"Directory {subtitle_dir} does not exist"}), 404
+        
+        # Find subtitle files
+        subtitle_files = glob.glob(os.path.join(subtitle_dir, pattern))
+        subtitle_files.extend(glob.glob(os.path.join(subtitle_dir, "*.vtt")))
+        subtitle_files.extend(glob.glob(os.path.join(subtitle_dir, "*.sub")))
+        
+        subtitles = []
+        for file_path in subtitle_files:
+            if os.path.isfile(file_path):
+                file_name = os.path.basename(file_path)
+                file_size = os.path.getsize(file_path)
+                file_ext = os.path.splitext(file_name)[1].lower()
+                
+                subtitles.append({
+                    "filename": file_name,
+                    "path": file_path,
+                    "size": file_size,
+                    "extension": file_ext,
+                    "language": "unknown"  # Could be enhanced with language detection
+                })
+        
+        return jsonify({
+            "code": 200,
+            "data": {
+                "subtitles": subtitles,
+                "total": len(subtitles),
+                "directory": subtitle_dir
+            }
+        })
+        
+    except Exception as e:
+        return jsonify({"error": f"Failed to scan local subtitles: {str(e)}"}), 500
+
+@app.get("/api/subtitles/stream")
+def get_stream_subtitles():
+    """Get subtitles for a specific stream using multiple sources"""
+    subject_id = request.args.get("subjectId")
+    stream_id = request.args.get("streamId")
+    title = request.args.get("title")
+    language = request.args.get("lang", "en")
+    
+    if not subject_id and not title:
+        return jsonify({"error": "Either subjectId or title is required"}), 400
+    
+    results = {
+        "code": 200,
+        "data": {
+            "subtitles": [],
+            "sources": [],
+            "subject_id": subject_id,
+            "stream_id": stream_id,
+            "title": title
+        }
+    }
+    
+    # Try OpenSubtitles API first
+    if title:
+        try:
+            opensubtitles_url = "https://api.opensubtitles.com/api/v1/subtitles"
+            params = {
+                "query": title,
+                "languages": language,
+                "limit": 10
+            }
+            
+            headers = {
+                "User-Agent": "MovieBox/1.0",
+                "Accept": "application/json"
+            }
+            
+            with httpx.Client(timeout=15.0) as client:
+                response = client.get(opensubtitles_url, params=params, headers=headers)
+                
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("data"):
+                    results["data"]["subtitles"].extend(data["data"])
+                    results["data"]["sources"].append("opensubtitles")
+        except Exception as e:
+            results["data"]["sources"].append(f"opensubtitles_error: {str(e)}")
+    
+    # Try local subtitles
+    try:
+        local_subtitles = get_local_subtitles()
+        if local_subtitles.status_code == 200:
+            local_data = local_subtitles.get_json()
+            if local_data.get("data", {}).get("subtitles"):
+                results["data"]["subtitles"].extend(local_data["data"]["subtitles"])
+                results["data"]["sources"].append("local")
+    except Exception as e:
+        results["data"]["sources"].append(f"local_error: {str(e)}")
+    
+    # Try the original app API as fallback
+    if subject_id and stream_id:
+        try:
+            app_url = f"https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/get-stream-captions"
+            host_override = request.args.get("host")
+            params = {"subjectId": subject_id, "streamId": stream_id}
+            if host_override:
+                params["host"] = host_override
+
+            # Prepare headers and auth like search API
+            headers = {
+                "accept": season_info.ACCEPT,
+                "user-agent": sign_search.USER_AGENT,
+            }
+
+            auth = get_default_token()
+            if auth:
+                headers["Authorization"] = auth if auth.lower().startswith("bearer ") else f"Bearer {auth}"
+
+            # Sign using the shared, proven signer with full URL and empty body (GET)
+            # Use streamId first in the URL (order doesn't matter; signer normalizes)
+            # Build signing URL including optional host
+            if host_override:
+                full_url = f"{app_url}?host={urllib.parse.quote(host_override)}&streamId={stream_id}&subjectId={subject_id}"
+            else:
+                full_url = f"{app_url}?streamId={stream_id}&subjectId={subject_id}"
+            x_tr_sig, sig_method, ts, s2s = play_info.sign(
+                "GET",
+                full_url,
+                b"",
+                season_info.ACCEPT,
+                "",
+                return_string_to_sign=True,
+            )
+            headers["x-tr-signature"] = x_tr_sig
+            headers["x-tr-signature-method"] = sig_method
+            # Always include X-Client-Token like search endpoint (even with Authorization)
+            headers["X-Client-Token"] = sign_search.x_client_token(ts)
+
+            if request.args.get("dbg") == "1":
+                print(f"[subtitle_debug] StringToSign:\n{s2s}")
+                print(f"[subtitle_debug] Full URL (for signing): {full_url}")
+                print(f"[subtitle_debug] Headers (sans auth): {{k: v for k, v in headers.items() if k.lower() != 'authorization'}}")
+
+            with httpx.Client(http2=True, timeout=20.0) as client:
+                response = client.get(app_url, params=params, headers=headers)
+                # Fallback: if 407, try raw-query signing (no normalization)
+                if response.status_code == 407:
+                    parsed = urllib.parse.urlsplit(full_url)
+                    path = parsed.path
+                    raw_q = parsed.query  # already in our desired order
+                    # Build raw stringToSign
+                    s2s_raw = "\n".join([
+                        "GET",
+                        season_info.ACCEPT or "",
+                        "",
+                        "",
+                        str(ts),
+                        "",
+                        f"{path}?{raw_q}",
+                    ])
+                    import base64, hashlib, hmac
+                    KEY = play_info.KEY
+                    sig_bytes = hmac.new(KEY, s2s_raw.encode("utf-8"), hashlib.md5).digest()
+                    xtr = f"{ts}|2|" + base64.b64encode(sig_bytes).decode("ascii")
+                    headers["x-tr-signature"] = xtr
+                    if request.args.get("dbg") == "1":
+                        print(f"[subtitle_debug] RAW StringToSign:\n{s2s_raw}")
+                    response = client.get(app_url, params=params, headers=headers)
+            
+            if response.status_code == 200:
+                app_data = response.json()
+                added = 0
+                try:
+                    payload = app_data.get("data") or {}
+                    ext_list = payload.get("extCaptions") or []
+                    for it in ext_list:
+                        if not isinstance(it, dict):
+                            continue
+                        url = it.get("url") or it.get("downloadUrl")
+                        if not url:
+                            continue
+                        lan = it.get("lanName") or it.get("lan") or "unknown"
+                        size = None
+                        try:
+                            size = int(it.get("size")) if it.get("size") is not None else None
+                        except Exception:
+                            size = None
+                        # Derive filename and extension from URL (strip query)
+                        try:
+                            parsed_u = urllib.parse.urlsplit(url)
+                            fname = parsed_u.path.split("/")[-1]
+                        except Exception:
+                            fname = url.split("/")[-1]
+                        ext = "." + fname.split(".")[-1] if "." in fname else None
+                        results["data"]["subtitles"].append({
+                            "language": lan,
+                            "url": url,
+                            "source": "app_api",
+                            "filename": fname,
+                            "extension": ext,
+                            "size": size,
+                        })
+                        added += 1
+                except Exception:
+                    pass
+                if added > 0:
+                    results["data"]["sources"].append("app_api")
+            else:
+                # Include small snippet of error for debugging
+                snippet = None
+                try:
+                    snippet = response.text[:160]
+                except Exception:
+                    pass
+                results["data"]["sources"].append(f"app_api_error: {response.status_code}{' ' + snippet if snippet else ''}")
+                
+        except Exception as e:
+            results["data"]["sources"].append(f"app_api_error: {str(e)}")
+    
+    results["data"]["total"] = len(results["data"]["subtitles"])
+    return jsonify(results)
+
+@app.get("/api/subtitles/file/<path:filename>")
+def serve_subtitle_file(filename):
+    """Serve subtitle file content for playback"""
+    import os
+    
+    subtitle_dir = request.args.get("dir", "./subtitles")
+    file_path = os.path.join(subtitle_dir, filename)
+    
+    if not os.path.exists(file_path) or not os.path.isfile(file_path):
+        return jsonify({"error": "Subtitle file not found"}), 404
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Determine content type based on file extension
+        ext = os.path.splitext(filename)[1].lower()
+        content_type = {
+            '.srt': 'text/plain',
+            '.vtt': 'text/vtt',
+            '.sub': 'text/plain',
+            '.ass': 'text/plain',
+            '.ssa': 'text/plain'
+        }.get(ext, 'text/plain')
+        
+        response = Response(content, content_type=content_type)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return response
+        
+    except Exception as e:
+        return jsonify({"error": f"Failed to read subtitle file: {str(e)}"}), 500
+
+@app.get("/api/subtitles/convert")
+def convert_subtitle_format():
+    """Convert subtitle format (e.g., SRT to VTT)"""
+    import os
+    import tempfile
+    
+    filename = request.args.get("file")
+    target_format = request.args.get("format", "vtt")
+    subtitle_dir = request.args.get("dir", "./subtitles")
+    
+    if not filename:
+        return jsonify({"error": "file parameter is required"}), 400
+    
+    file_path = os.path.join(subtitle_dir, filename)
+    if not os.path.exists(file_path):
+        return jsonify({"error": "Subtitle file not found"}), 404
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Simple SRT to VTT conversion
+        if filename.lower().endswith('.srt') and target_format.lower() == 'vtt':
+            # Remove SRT numbering and convert timestamps
+            lines = content.split('\n')
+            vtt_lines = ['WEBVTT\n']
+            
+            i = 0
+            while i < len(lines):
+                line = lines[i].strip()
+                if line.isdigit():  # Skip SRT numbering
+                    i += 1
+                    continue
+                elif '-->' in line:  # Convert timestamp format
+                    # SRT: 00:00:01,000 --> 00:00:04,000
+                    # VTT: 00:00:01.000 --> 00:00:04.000
+                    vtt_line = line.replace(',', '.')
+                    vtt_lines.append(vtt_line + '\n')
+                elif line:  # Add subtitle text
+                    vtt_lines.append(line + '\n')
+                i += 1
+            
+            converted_content = ''.join(vtt_lines)
+            return Response(converted_content, content_type='text/vtt')
+        
+        # For other formats, return original
+        return Response(content, content_type='text/plain')
+        
+    except Exception as e:
+        return jsonify({"error": f"Failed to convert subtitle: {str(e)}"}), 500
+
+@app.get("/api/subtitles/test")
+def test_subtitle_api():
+    """Test endpoint to call subtitle API using exact same method as search"""
+    subject_id = request.args.get("subjectId")
+    stream_id = request.args.get("streamId")
+    
+    if not subject_id or not stream_id:
+        return jsonify({"error": "subjectId and streamId required"}), 400
+    
+    try:
+        # Use the exact same approach as the working search API
+        base_url = "https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/get-stream-captions"
+        
+        # For GET requests, query params must be part of the URL when signing
+        # Support optional host override
+        host_override = request.args.get("host")
+        if host_override:
+            full_url = f"{base_url}?host={urllib.parse.quote(host_override)}&streamId={stream_id}&subjectId={subject_id}"
+        else:
+            full_url = f"{base_url}?streamId={stream_id}&subjectId={subject_id}"
+        
+        # Get signature using play_info.sign (GET with empty content-length expectation)
+        signature, sig_method, timestamp, string_to_sign = play_info.sign(
+            "GET", 
+            full_url,  # Full URL with query params
+            b"",  # no body
+            season_info.ACCEPT,
+            "",
+            return_string_to_sign=True,
+        )
+        
+        headers = {
+            "accept": season_info.ACCEPT,
+            "user-agent": sign_search.USER_AGENT,
+            "x-tr-signature": signature,
+            "x-tr-signature-method": sig_method
+        }
+        
+        auth = get_default_token()
+        if auth:
+            headers["Authorization"] = auth if auth.lower().startswith("bearer ") else f"Bearer {auth}"
+        # Always include X-Client-Token as well (some endpoints may require it)
+        headers["X-Client-Token"] = sign_search.x_client_token(timestamp)
+        
+        # Debug info
+        debug_info = {
+            "base_url": base_url,
+            "full_url": full_url,
+            "params": {"subjectId": subject_id, "streamId": stream_id},
+            "string_to_sign": string_to_sign,
+            "signature": signature,
+            "method": sig_method,
+            "timestamp": timestamp,
+            "headers": {k: v for k, v in headers.items() if k.lower() != "authorization"}
+        }
+        
+        # Make request with params (not in URL since we already signed with them)
+        with httpx.Client(http2=True, timeout=20.0) as client:
+            req_params = {"subjectId": subject_id, "streamId": stream_id}
+            if host_override:
+                req_params["host"] = host_override
+            response = client.get(base_url, params=req_params, headers=headers)
+            # Fallback retry with raw-query signing on 407
+            if response.status_code == 407:
+                parsed = urllib.parse.urlsplit(full_url)
+                path = parsed.path
+                raw_q = parsed.query
+                s2s_raw = "\n".join([
+                    "GET",
+                    season_info.ACCEPT or "",
+                    "",
+                    "",
+                    str(timestamp),
+                    "",
+                    f"{path}?{raw_q}",
+                ])
+                import base64, hashlib, hmac
+                KEY = play_info.KEY
+                sig_bytes = hmac.new(KEY, s2s_raw.encode("utf-8"), hashlib.md5).digest()
+                headers["x-tr-signature"] = f"{timestamp}|2|" + base64.b64encode(sig_bytes).decode("ascii")
+                if request.args.get("dbg") == "1":
+                    debug_info["string_to_sign_raw"] = s2s_raw
+                response = client.get(base_url, params=req_params, headers=headers)
+        
+        return jsonify({
+            "status_code": response.status_code,
+            "response": response.text[:1000] if response.text else None,
+            "debug": debug_info
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e), "debug": debug_info if 'debug_info' in locals() else None}), 500
+
+
+@app.get("/api/subtitles/source")
+def source_subtitles():
+    """Return ONLY the subtitles JSON from the original source API (no local)."""
+    subject_id = request.args.get("subjectId")
+    stream_id = request.args.get("streamId")
+    host_override = request.args.get("host")
+    if not subject_id or not stream_id:
+        return jsonify({"error": "subjectId and streamId required"}), 400
+
+    debug_info = {}
+    try:
+        base_url = "https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/get-stream-captions"
+        params = {"subjectId": subject_id, "streamId": stream_id}
+        if host_override:
+            params["host"] = host_override
+        query = urllib.parse.urlencode(params)
+        full_url = f"{base_url}?{query}"
+
+        # Sign like the working approach
+        signature, sig_method, timestamp, string_to_sign = play_info.sign(
+            "GET", full_url, b"", season_info.ACCEPT, "", return_string_to_sign=True
+        )
+        headers = {
+            "user-agent": play_info.USER_AGENT if hasattr(play_info, "USER_AGENT") else "okhttp/4.9.3",
+            "accept": season_info.ACCEPT,
+            "x-tr-signature": signature,
+            "x-tr-signature-method": sig_method,
+            "X-Client-Token": sign_search.x_client_token(timestamp),
+        }
+        # Optional Authorization support
+        auth = get_default_token()
+        if auth:
+            headers["Authorization"] = auth if auth.lower().startswith("bearer ") else f"Bearer {auth}"
+
+        if request.args.get("dbg") == "1":
+            debug_info = {
+                "full_url": full_url,
+                "params": params,
+                "headers": {k: v for k, v in headers.items() if k.lower() != "authorization"},
+                "string_to_sign": string_to_sign,
+                "timestamp": timestamp,
+            }
+
+        with httpx.Client(http2=True, timeout=20.0) as client:
+            resp = client.get(base_url, params=params, headers=headers)
+            if resp.status_code == 407:
+                # raw-order fallback
+                parsed = urllib.parse.urlsplit(full_url)
+                path = parsed.path
+                raw_q = parsed.query
+                s2s_raw = "\n".join([
+                    "GET",
+                    season_info.ACCEPT or "",
+                    "",
+                    "",
+                    str(timestamp),
+                    "",
+                    f"{path}?{raw_q}",
+                ])
+                import base64, hashlib, hmac
+                KEY = play_info.KEY
+                sig_bytes = hmac.new(KEY, s2s_raw.encode("utf-8"), hashlib.md5).digest()
+                headers["x-tr-signature"] = f"{timestamp}|2|" + base64.b64encode(sig_bytes).decode("ascii")
+                if request.args.get("dbg") == "1":
+                    debug_info["string_to_sign_raw"] = s2s_raw
+                resp = client.get(base_url, params=params, headers=headers)
+
+        # Return upstream JSON directly
+        try:
+            data = resp.json()
+        except Exception:
+            return jsonify({"status_code": resp.status_code, "text": resp.text}), resp.status_code
+        return jsonify(data), resp.status_code
+    except Exception as e:
+        return jsonify({"error": str(e), "debug": debug_info if 'debug_info' in locals() else None}), 500
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-#!/home/sukh/Downloads/dec/webapp/.venv/bin/python3
+#!/home/sukh/Downloads/dec/webapp/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

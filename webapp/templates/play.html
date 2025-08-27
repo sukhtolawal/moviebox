@@ -17,6 +17,7 @@
       <div class="card err">{{ error }}</div>
     {% else %}
       <div class="player-wrap">
+        <div id="tplMeta" data-subject-id="{{ subject_id }}" data-se="{{ se }}" data-ep="{{ ep }}"></div>
         <div class="row" style="margin-bottom:10px;">
           <div class="title">S{{ se }} · E{{ ep }}</div>
           <div class="muted">Select quality:</div>
@@ -25,17 +26,26 @@
             <a class="pill-btn {% if selected and s.url == selected.url %}active{% endif %}" href="/play?subjectId={{ subject_id }}&se={{ se }}&ep={{ ep }}&qidx={{ idx }}">{{ s.resolution or s.format or 'auto' }}</a>
           {% endfor %}
         </div>
+        <div class="row" style="margin-bottom:10px; align-items:center; gap:10px;">
+          <div class="muted">Subtitles:</div>
+          <button id="ccBtn" class="pill-btn" type="button" disabled title="Load subtitles">CC</button>
+          <span id="ccStatus" class="muted"></span>
+        </div>
+        <div id="ccMenu" style="display:none; position:fixed; z-index:50; background:#111; color:#fff; border:1px solid #333; border-radius:8px; padding:8px; min-width:200px; box-shadow:0 6px 24px rgba(0,0,0,0.35);"></div>
         <div class="row" id="audioRow" style="margin-bottom:10px; display:none;">
           <div class="muted">Audio:</div>
           <div id="audioPills" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
         </div>
         {% if selected %}
-          <video id="player" controls playsinline></video>
+          <video id="player" controls playsinline crossorigin="anonymous" data-src="{{ selected.url }}"></video>
           <script>
             (function(){
-              const srcUrl = {{ selected.url | tojson }};
+              const srcUrl = document.getElementById('player').getAttribute('data-src');
               const ua = 'okhttp/4.9.3'; // mirrors app UA
               const video = document.getElementById('player');
+              const ccBtn = document.getElementById('ccBtn');
+              const ccStatus = document.getElementById('ccStatus');
+              const ccMenu = document.getElementById('ccMenu');
               function canPlayM3U8(){ return video.canPlayType('application/vnd.apple.mpegURL'); }
               const isM3U8 = srcUrl.includes('.m3u8');
               const audioRow = document.getElementById('audioRow');
@@ -48,7 +58,7 @@
                 list.forEach((t, i) => {
                   const btn = document.createElement('a');
                   btn.className = 'pill' + (i === getActiveIdx() ? ' active' : '');
-                  const label = (t.name || t.lang || t.language || `Track ${i+1}`);
+                  const label = (t.name || t.lang || t.language || ('Track ' + (i + 1)));
                   btn.textContent = label;
                   btn.href = 'javascript:void(0)';
                   btn.onclick = () => {
@@ -100,6 +110,172 @@
                 video.src = srcUrl;
               }
               // set UA via fetch is not trivial; CDN link doesn't need headers typically.
+
+              // -------- Subtitles (CC) handling --------
+              const metaEl = document.getElementById('tplMeta');
+              const subjectIdTpl = metaEl.dataset.subjectId;
+              const seasonNoTpl = metaEl.dataset.se;
+              const episodeNoTpl = metaEl.dataset.ep;
+              let trackEl = null;
+              let trackUrl = null;
+              let trackLoaded = false;
+              let captionsList = null; // upstream extCaptions
+              let menuOpen = false;
+
+              function pickCaption(data){
+                try {
+                  const ext = (data && data.data && data.data.extCaptions) || [];
+                  if (!Array.isArray(ext) || ext.length === 0) return null;
+                  // Prefer English, else first
+                  const en = ext.find(x => (x.lan || '').toLowerCase().startsWith('en') || (x.lanName || '').toLowerCase().includes('english'));
+                  return en || ext[0];
+                } catch(e){ return null; }
+              }
+
+              function srtToVtt(srt){
+                const lines = srt.replace(/\r/g, '').split('\n');
+                const out = ['WEBVTT',''];
+                let i = 0;
+                while (i < lines.length){
+                  const line = lines[i].trim();
+                  if (/^\d+$/.test(line)) { i++; continue; }
+                  if (line.includes('-->')){
+                    out.push(line.replace(/,/g, '.'));
+                    i++;
+                    while (i < lines.length && lines[i].trim() !== '') {
+                      out.push(lines[i]); i++;
+                    }
+                    out.push('');
+                  }
+                  i++;
+                }
+                return out.join('\n');
+              }
+
+              async function fetchJson(url){
+                const r = await fetch(url, { credentials: 'same-origin' });
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+              }
+
+              async function ensureCaptionsList(){
+                if (captionsList) return captionsList;
+                ccStatus.textContent = 'Loading…';
+                // 1) Get streams with IDs
+                const playJson = await fetchJson(`/api/play?subjectId=${encodeURIComponent(subjectIdTpl)}&se=${encodeURIComponent(seasonNoTpl)}&ep=${encodeURIComponent(episodeNoTpl)}`);
+                const list = (playJson && playJson.data && (playJson.data.streams || playJson.data.list)) || [];
+                const match = list.find(it => it.url === srcUrl) || list[0];
+                if (!match || !match.id) throw new Error('streamId not found');
+                const streamId = match.id;
+                // 2) Fetch upstream captions JSON
+                const subJson = await fetchJson(`/api/subtitles/source?subjectId=${encodeURIComponent(subjectIdTpl)}&streamId=${encodeURIComponent(streamId)}`);
+                const ext = (subJson && subJson.data && subJson.data.extCaptions) || [];
+                captionsList = Array.isArray(ext) ? ext : [];
+                if (!captionsList.length) ccStatus.textContent = 'No subtitles'; else ccStatus.textContent = '';
+                ccBtn.disabled = captionsList.length === 0;
+                return captionsList;
+              }
+
+              function closeMenu(){
+                ccMenu.style.display = 'none';
+                menuOpen = false;
+                document.removeEventListener('click', onDocClick, true);
+                document.removeEventListener('keydown', onEsc, true);
+              }
+
+              function onDocClick(e){
+                if (!ccMenu.contains(e.target) && e.target !== ccBtn) closeMenu();
+              }
+              function onEsc(e){ if (e.key === 'Escape') closeMenu(); }
+
+              function openMenu(items){
+                // Position under CC button
+                const r = ccBtn.getBoundingClientRect();
+                ccMenu.style.left = Math.round(r.left) + 'px';
+                ccMenu.style.top = Math.round(r.bottom + 6) + 'px';
+                ccMenu.innerHTML = '';
+                // Build list: Off + each caption
+                const mkItem = (label, handler, active) => {
+                  const a = document.createElement('a');
+                  a.href = 'javascript:void(0)';
+                  a.style.display = 'block';
+                  a.style.padding = '8px 10px';
+                  a.style.borderRadius = '6px';
+                  a.style.color = '#fff';
+                  a.style.textDecoration = 'none';
+                  a.style.background = active ? '#2a2a2a' : 'transparent';
+                  a.textContent = label;
+                  a.onclick = () => { handler(); closeMenu(); };
+                  a.onmouseenter = () => { a.style.background = '#2a2a2a'; };
+                  a.onmouseleave = () => { a.style.background = active ? '#2a2a2a' : 'transparent'; };
+                  return a;
+                };
+                const offActive = false;
+                ccMenu.appendChild(mkItem('Off', () => {
+                  // Hide all text tracks
+                  try { const tracks = video.textTracks; for (let i = 0; i < tracks.length; i++) tracks[i].mode = 'disabled'; } catch(_){}
+                  ccBtn.classList.remove('active');
+                }, offActive));
+
+                items.forEach((cap, idx) => {
+                  const label = (cap.lanName || cap.lan || ('Subtitle ' + (idx + 1)));
+                  ccMenu.appendChild(mkItem(label, () => loadCaption(cap, label), false));
+                });
+
+                ccMenu.style.display = 'block';
+                menuOpen = true;
+                setTimeout(() => {
+                  document.addEventListener('click', onDocClick, true);
+                  document.addEventListener('keydown', onEsc, true);
+                }, 0);
+              }
+
+              async function loadCaption(cap, labelOverride){
+                try {
+                  if (!cap || !cap.url) throw new Error('no caption url');
+                  let url = cap.url;
+                  const isSrt = /\.srt(\b|[?&#])/i.test(url);
+                  if (isSrt){
+                    const resp = await fetch(url);
+                    if (!resp.ok) throw new Error('subtitle fetch failed ' + resp.status);
+                    const srt = await resp.text();
+                    const vtt = srtToVtt(srt);
+                    const blob = new Blob([vtt], { type: 'text/vtt' });
+                    url = URL.createObjectURL(blob);
+                  }
+                  if (trackEl) { try { video.removeChild(trackEl); } catch(_){} }
+                  trackEl = document.createElement('track');
+                  trackEl.kind = 'subtitles';
+                  trackEl.label = labelOverride || cap.lanName || cap.lan || 'Subtitles';
+                  trackEl.srclang = ((cap.lan || 'en').split('-')[0] || 'en');
+                  trackEl.src = url;
+                  trackEl.default = true;
+                  video.appendChild(trackEl);
+                  trackUrl = url;
+                  trackLoaded = true;
+                  ccBtn.disabled = false;
+                  ccBtn.classList.add('active');
+                  ccStatus.textContent = trackEl.label;
+                  trackEl.addEventListener('load', () => {
+                    try { trackEl.mode = 'showing'; } catch(_){}
+                  });
+                } catch(err){
+                  ccStatus.textContent = 'Subtitle failed';
+                  console.warn('Load caption failed:', err);
+                }
+              }
+
+              ccBtn.addEventListener('click', async () => {
+                try {
+                  const items = await ensureCaptionsList();
+                  if (!items || items.length === 0) { ccBtn.disabled = true; return; }
+                  if (menuOpen) { closeMenu(); return; }
+                  openMenu(items);
+                } catch(err) {
+                  ccBtn.disabled = true;
+                  ccStatus.textContent = 'No subtitles';
+                }
+              });
             })();
           </script>
         {% else %}

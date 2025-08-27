@@ -1,0 +1,2 @@
+-r ../webapp/requirements.txt
+gunicorn==21.2.0

@@ -1,0 +1,1 @@
+web: bash -lc 'python write_token.py && gunicorn webapp.app:app --bind 0.0.0.0:$PORT --preload --workers 2 --threads 4 --timeout 120'
