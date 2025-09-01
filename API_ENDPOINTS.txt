@@ -1,0 +1,145 @@
+MovieBox Backend API Endpoints
+================================
+Backend app: webapp/app.py (Flask)
+Default: https://sidhusukh.ggff.net  (overridable via PORT env)
+Note: Many endpoints accept an auth token via ?auth=... or from token.txt in repo root.
+
+Search and Subjects
+-------------------
+GET /api/search
+  Params:
+    - q (required)
+    - tab (optional, e.g. TV, MovieTV)
+    - page (default 1)
+    - per (default 5)
+    - auth (optional)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/search?q=breaking+bad&tab=TV&page=1&per=5"
+
+GET /api/subject/<subject_id>
+  Params:
+    - host (optional)
+    - auth (optional)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subject/12345?host=foo"
+
+Playback
+--------
+GET /api/play
+  Params:
+    - subjectId (required)
+    - se (season, default 1)
+    - ep (episode, default 1)
+    - host (optional)
+    - auth (optional)
+  Notes: Movies without seasons are normalized to S0E0.
+  Example:
+    curl "https://sidhusukh.ggff.net/api/play?subjectId=12345&se=1&ep=1"
+
+GET /api/proxy
+  Purpose: Media proxy with CORS and Range support
+  Params:
+    - url (required) absolute http(s) media URL
+  Example:
+    curl -I "https://sidhusukh.ggff.net/api/proxy?url=https%3A%2F%2Fexample.com%2Fvideo.mp4"
+
+Subtitles
+---------
+GET /api/subtitles/search
+  Purpose: Search OpenSubtitles
+  Params:
+    - title OR imdb_id (one required)
+    - language (default en)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/search?title=Inception&language=en"
+
+GET /api/subtitles/download
+  Purpose: Get OpenSubtitles download info
+  Params:
+    - subtitle_id (required)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/download?subtitle_id=1234567"
+
+GET /api/subtitles/opensubtitles
+  Purpose: Alternative OpenSubtitles search with season/episode support
+  Params:
+    - q OR imdb_id (one required)
+    - lang (default en)
+    - season (optional)
+    - episode (optional)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/opensubtitles?q=Breaking+Bad&season=01&episode=01&lang=en"
+
+GET /api/subtitles/local
+  Purpose: List local subtitle files
+  Params:
+    - dir (default ./subtitles)
+    - pattern (default *.srt) [also includes *.vtt, *.sub]
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/local?dir=./webapp/subtitles"
+
+GET /api/subtitles/stream
+  Purpose: Aggregate subtitles from multiple sources
+  Params:
+    - title (optional; used for OpenSubtitles)
+    - subjectId and streamId (optional; used for source API)
+    - lang (default en)
+    - host (optional; forwarded to source API)
+    - auth (optional)
+  Examples:
+    curl "https://sidhusukh.ggff.net/api/subtitles/stream?title=Inception&lang=en"
+    curl "https://sidhusukh.ggff.net/api/subtitles/stream?subjectId=12345&streamId=abc123&host=foo"
+
+GET /api/subtitles/file/<path:filename>
+  Purpose: Serve a local subtitle file
+  Params:
+    - dir (default ./subtitles)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/file/sample.srt?dir=./webapp/subtitles"
+
+GET /api/subtitles/convert
+  Purpose: Convert subtitles (simple SRT -> VTT)
+  Params:
+    - file (required)
+    - format (default vtt)
+    - dir (default ./subtitles)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/convert?file=sample.srt&format=vtt&dir=./webapp/subtitles"
+
+GET /api/subtitles/test
+  Purpose: Diagnostic call to source captions API
+  Params:
+    - subjectId (required)
+    - streamId (required)
+    - host (optional)
+    - dbg (optional, e.g. 1)
+    - auth (optional)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/test?subjectId=12345&streamId=abc123&dbg=1"
+
+GET /api/subtitles/source
+  Purpose: Return raw JSON from source captions API
+  Params:
+    - subjectId (required)
+    - streamId (required)
+    - host (optional)
+    - dbg (optional)
+    - auth (optional)
+  Example:
+    curl "https://sidhusukh.ggff.net/api/subtitles/source?subjectId=12345&streamId=abc123"
+
+HTML Routes (UI)
+----------------
+GET/POST /
+GET /subject/<subject_id>
+GET /play?subjectId=...&se=...&ep=...&host=...&dbg=...&preload=...
+
+Auth and Headers
+----------------
+- Provide auth via ?auth=Bearer%20TOKEN or token.txt at repo root.
+- Server computes required x-tr-signature, x-tr-signature-method, and X-Client-Token for source API calls.
+
+Notes
+-----
+- /api/proxy is CORS-enabled and forwards Range headers for streaming.
+- OpenSubtitles access may be rate-limited or require tokens; the server currently uses a generic User-Agent.

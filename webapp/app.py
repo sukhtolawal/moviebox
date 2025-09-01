@@ -34,10 +34,14 @@ def inject_asset_version():
 
 
 def get_default_token() -> Optional[str]:
-    # Prefer query 'auth' param, else token.txt
+    # Prefer query 'auth' param, then ENV (AUTH_TOKEN/TOKEN), else token.txt
     auth = request.args.get("auth") or request.form.get("auth")
     if auth:
         return auth
+    # Environment variables (best for serverless platforms like Vercel)
+    env_token = os.environ.get("AUTH_TOKEN") or os.environ.get("TOKEN")
+    if env_token:
+        return env_token
     try:
         with open(os.path.join(os.path.dirname(__file__), "..", "token.txt"), "r", encoding="utf-8") as f:
             t = f.read().strip()

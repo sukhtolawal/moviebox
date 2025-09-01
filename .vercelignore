@@ -1,0 +1,25 @@
+# Exclude large and unrelated assets from deployment
+MovieBox.apk
+MovieBox_src/
+mobile/
+web-frontend/
+dockerized/
+hf-space-backend/
+render-backend/
+__pycache__/
+.venv/
+*.out
+*.log
+*.cache
+*.mp4
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Node artifacts
+node_modules/
+**/node_modules/
+
+# Only include the backend-related paths
+# (vercel uses allowlist based on .vercelignore exclusions, but we keep backend files in repo root)

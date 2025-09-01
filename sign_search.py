@@ -9,6 +9,7 @@ import urllib.parse
 import urllib.request
 import urllib.error
 import httpx
+import shlex
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -221,13 +222,13 @@ def call_search(params: SearchParams, time_offset_ms: int = 0, debug: bool = Fal
         curl = [
             "curl",
             "-i",
-            f"'{API_URL}'",
-            f"-H 'accept: {ACCEPT}'",
-            f"-H 'content-type: {CONTENT_TYPE}'",
-            f"-H 'x-tr-signature-method: {method}'",
-            f"-H 'x-tr-signature: {x_tr_sig}'",
-            f"-H 'user-agent: {USER_AGENT}'",
-            f"--data-binary '{body_str.replace("'", "'\\''")}'",
+            shlex.quote(API_URL),
+            "-H " + shlex.quote(f"accept: {ACCEPT}"),
+            "-H " + shlex.quote(f"content-type: {CONTENT_TYPE}"),
+            "-H " + shlex.quote(f"x-tr-signature-method: {method}"),
+            "-H " + shlex.quote(f"x-tr-signature: {x_tr_sig}"),
+            "-H " + shlex.quote(f"user-agent: {USER_AGENT}"),
+            "--data-binary " + shlex.quote(body_str),
         ]
         debug_lines.append("Curl:\n" + " \\\n+  ".join(curl))
         # Print
