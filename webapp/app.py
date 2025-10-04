@@ -161,11 +161,16 @@ def api_search():
     q = request.args.get("q", "")
     tab = request.args.get("tab")
     page = int(request.args.get("page", 1))
-    per = int(request.args.get("per", 5))
+    # Default to 20 to match frontend expectation if "per" not provided
+    per = int(request.args.get("per", 20))
     auth = get_default_token()
     if not q:
         return jsonify({"code": 400, "message": "missing q", "data": {}}), 400
     try:
+        try:
+            print(f"[api_search] incoming q='{q}' page={page} per={per} tab={tab or ''}")
+        except Exception:
+            pass
         params = sign_search.SearchParams(keyword=q, page=page, per_page=per, tab_id=(tab or None))
         cache_key = f"search::{params.keyword}::{params.page}::{params.per_page}::{params.tab_id or ''}::{'1' if auth else '0'}"
         data = _cache_get(cache_key)
@@ -175,6 +180,24 @@ def api_search():
             t1 = time.time()
             print(f"[timing] api search({params.keyword}, tab={params.tab_id}) {int((t1-t0)*1000)}ms")
             _cache_set(cache_key, data, ttl_sec=60)
+        # Log pager and counts to diagnose pagination
+        try:
+            body = (data or {}).get("data") if isinstance(data, dict) else None
+            pager = (body or {}).get("pager") if isinstance(body, dict) else None
+            # Try to count unfiltered subjects for the page
+            blocks = []
+            if isinstance(body, dict):
+                blocks = body.get("results") or body.get("blocks") or []
+            subjects_count = 0
+            if isinstance(blocks, list):
+                for b in blocks:
+                    if isinstance(b, dict):
+                        subs = b.get("subjects")
+                        if isinstance(subs, list):
+                            subjects_count += len(subs)
+            print(f"[api_search] pager={pager} subjects_in_page={subjects_count}")
+        except Exception:
+            pass
         return jsonify(data)
     except SystemExit as e:
         return jsonify({"code": 500, "message": str(e)}), 500
