@@ -6,6 +6,7 @@ services:
       context: ..
       dockerfile: dockerized/backend/Dockerfile
     container_name: dec-backend
+    network_mode: host
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -18,11 +19,10 @@ services:
       context: ..
       dockerfile: dockerized/frontend/Dockerfile
     container_name: dec-frontend
-    ports:
-      - "3001:3000"
+    network_mode: host
     depends_on:
       - backend
     environment:
-      - BACKEND_URL=http://backend:5001
+      - BACKEND_URL=http://localhost:5001
     restart: unless-stopped
 

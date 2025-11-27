@@ -16,3 +16,6 @@ build/
 .idea/
 *.log
 web-frontend/.env.local
+
+# local auth token
+token.txt
